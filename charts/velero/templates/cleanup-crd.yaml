@@ -7,9 +7,6 @@ metadata:
   name: {{ template "velero.fullname" . }}-cleanup
   namespace: {{ .Release.Namespace }}
   annotations:
-    "helm.sh/hook": pre-delete
-    "helm.sh/hook-weight": "3"
-    "helm.sh/hook-delete-policy": hook-succeeded
   labels:
     app.kubernetes.io/name: {{ include "velero.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
