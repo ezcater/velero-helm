@@ -25,4 +25,4 @@ sed -i'' '/helm.sh\/hook/d' charts/velero/templates/*
 ```
 
 5. Double check that the only files that changed are the CRDs in the `crds/` directory, and two CRs: backupstoragelocation and volumesnapshotlocation.
-6. Commit and PR against ezcater/vmware-helm-charts.
+6. Commit and PR against ezcater/vmware-helm-charts. Don't open a PR against the upstream repo!
