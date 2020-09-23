@@ -13,6 +13,12 @@ Relevant Issues:
 
 # How to Generate this Chart
 
+First: add the upstream chart as an additional remote named `upstream`:
+
+```
+git remote add upstream git@github.com:vmware-tanzu/helm-charts.git
+```
+
 If we need to bump the version of this chart, we need to clear out the helm hooks from `main`.
 
 1. Check the status of those two issues linked above. If the maintainers have implemented a proper fix for this, we may be able to use the chart as-is and not fork it.
