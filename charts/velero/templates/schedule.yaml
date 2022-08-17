@@ -6,11 +6,6 @@ metadata:
   name: {{ include "velero.fullname" $ }}-{{ $scheduleName }}
   namespace: {{ $.Release.Namespace }}
   annotations:
-  {{- if $schedule.annotations }}
-    {{- toYaml $schedule.annotations | nindent 4 }}
-  {{- end }}
-    "helm.sh/hook": post-install,post-upgrade,post-rollback
-    "helm.sh/hook-delete-policy": before-hook-creation
   labels:
     app.kubernetes.io/name: {{ include "velero.name" $ }}
     app.kubernetes.io/instance: {{ $.Release.Name }}
