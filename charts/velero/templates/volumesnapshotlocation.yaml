@@ -3,6 +3,7 @@ apiVersion: velero.io/v1
 kind: VolumeSnapshotLocation
 metadata:
   name: {{ include "velero.volumeSnapshotLocation.name" . }}
+  namespace: {{ .Release.Namespace }}
   annotations:
   labels:
     app.kubernetes.io/name: {{ include "velero.name" . }}
@@ -13,6 +14,8 @@ spec:
   provider: {{ include "velero.volumeSnapshotLocation.provider" . }}
 {{- with .Values.configuration.volumeSnapshotLocation.config }}
   config:
-{{ toYaml . | indent 4 }}
+{{- range $key, $value := . }}
+{{- $key | nindent 4 }}: {{ $value | quote }}
+{{- end }}
 {{- end -}}
 {{- end }}

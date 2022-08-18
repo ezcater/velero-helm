@@ -3,6 +3,7 @@ apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
   name: {{ include "velero.backupStorageLocation.name" . }}
+  namespace: {{ .Release.Namespace }}
   annotations:
   labels:
     app.kubernetes.io/name: {{ include "velero.name" . }}
@@ -11,20 +12,23 @@ metadata:
     helm.sh/chart: {{ include "velero.chart" . }}
 spec:
   provider: {{ include "velero.backupStorageLocation.provider" . }}
+  {{- with .Values.configuration.backupStorageLocation.default }}
+  default: {{ . }}
+  {{- end }}
+  accessMode: {{ .Values.configuration.backupStorageLocation.accessMode }}
 {{- with .Values.configuration.backupStorageLocation }}
   objectStorage:
-    bucket: {{ .bucket  }}
+    bucket: {{ .bucket | quote }}
     {{- with .prefix }}
-    prefix: {{ . }}
+    prefix: {{ . | quote }}
     {{- end }}
     {{- with .caCert }}
     caCert: {{ . }}
     {{- end }}
 {{- with .config }}
   config:
-{{ toYaml . | indent 4}}
-{{- if .s3ForcePathStyle }}
-    s3ForcePathStyle: {{ .s3ForcePathStyle | quote }}
+{{- range $key, $value := . }}
+{{- $key | nindent 4 }}: {{ $value | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
